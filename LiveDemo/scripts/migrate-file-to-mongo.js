@@ -36,7 +36,6 @@ async function migrate() {
 
   try {
     await connectToMongoDB(mongoUri);
-    await Token.init();
 
     for (const [token, value] of entries) {
       try {

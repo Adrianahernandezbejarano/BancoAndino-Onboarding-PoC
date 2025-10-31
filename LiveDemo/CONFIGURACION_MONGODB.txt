@@ -1,0 +1,85 @@
+==============================================
+CONFIGURACIÓN PARA MONGODB - CONTENIDO DEL .env
+==============================================
+
+Copia este contenido en un archivo llamado ".env" en la raíz del proyecto:
+
+--------------------------------------------------------------
+
+# Configuración del Servidor
+PORT=3000
+
+# Configuración de Seguridad
+# IMPORTANTE: Cambia esta clave por una clave segura de al menos 32 caracteres
+# Esta clave se usa para cifrar/descifrar la información privada
+VAULT_MASTER_KEY=please-set-a-strong-32+chars-secret-key-for-demo-purposes-only
+
+# API Key para proteger los endpoints (opcional pero recomendado)
+# Si no se proporciona, los endpoints estarán abiertos
+API_KEY=change-me-please
+
+# Configuración de Almacenamiento
+# Tipo de almacenamiento: 'file' o 'mongodb'
+STORAGE_TYPE=mongodb
+
+# MongoDB Connection String
+# Formato básico: mongodb://host:puerto/nombre-base-datos
+# Con autenticación: mongodb://usuario:password@host:puerto/nombre-base-datos?authSource=admin
+MONGODB_URI=mongodb://localhost:27017/privacy-vault
+
+# Configuración de archivo (solo se usa si STORAGE_TYPE=file)
+STORAGE_FILE_PATH=./vault-storage.json
+
+--------------------------------------------------------------
+
+INFORMACIÓN QUE NECESITO DE TI:
+================================
+
+1. Nombre de la base de datos:
+   La URI que proporcionaste (mongodb://localhost:27017/) necesita un nombre de base de datos.
+   Ejemplo: mongodb://localhost:27017/privacy-vault
+   
+   ¿Qué nombre quieres usar?
+   - privacy-vault (recomendado)
+   - banco-andino-vault
+   - pii-vault
+   - Otro: _______________
+
+2. ¿Tu MongoDB tiene autenticación?
+   - Sin autenticación: mongodb://localhost:27017/nombre-base-datos
+   - Con autenticación: mongodb://usuario:password@localhost:27017/nombre-base-datos?authSource=admin
+
+3. Clave maestra (VAULT_MASTER_KEY):
+   - ¿Tienes una clave de al menos 32 caracteres?
+   - Si no, puedo generarte una segura.
+
+VARIABLES REQUERIDAS:
+=====================
+
+✅ STORAGE_TYPE=mongodb (obligatorio para usar MongoDB)
+✅ MONGODB_URI=... (obligatorio, debe incluir nombre de base de datos)
+✅ VAULT_MASTER_KEY=... (obligatorio, mínimo 32 caracteres)
+⚪ API_KEY=... (opcional pero recomendado)
+⚪ PORT=... (opcional, por defecto 3000)
+
+INSTRUCCIONES:
+==============
+
+1. Crea un archivo llamado ".env" en la raíz del proyecto
+2. Copia el contenido de arriba
+3. Reemplaza "privacy-vault" por el nombre de base de datos que prefieras
+4. Si tienes autenticación, actualiza MONGODB_URI con usuario y contraseña
+5. Cambia VAULT_MASTER_KEY por una clave segura (mínimo 32 caracteres)
+6. Guarda el archivo
+7. Ejecuta: npm start
+
+VERIFICACIÓN:
+=============
+
+Después de crear el .env y ejecutar npm start, deberías ver:
+
+✅ Connected to MongoDB
+✅ MongoDB connection established
+Privacy Vault listening on port 3000
+Storage type: mongodb
+
