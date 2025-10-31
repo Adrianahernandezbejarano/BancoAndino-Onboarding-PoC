@@ -222,3 +222,4 @@ Este modelo puede usarse junto con el sistema de tokens (`Token` model) para:
 - ✅ Compatible con estructura existente
 - ✅ Sin warnings de índices duplicados
 
+
