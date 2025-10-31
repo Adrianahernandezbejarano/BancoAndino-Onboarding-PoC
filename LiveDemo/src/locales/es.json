@@ -1,0 +1,35 @@
+{
+  "status": {
+    "ok": "ok"
+  },
+  "errors": {
+    "invalidJson": "Formato JSON inválido",
+    "invalidJsonDetails": "El cuerpo de la solicitud debe ser un objeto JSON válido",
+    "invalidRequestBody": "Cuerpo de solicitud inválido",
+    "invalidRequestBodyDetails": "El cuerpo de la solicitud debe ser un objeto JSON válido",
+    "missingMessage": "Campo 'message' faltante",
+    "missingMessageDetails": "El cuerpo de la solicitud debe contener un campo 'message'",
+    "invalidMessageType": "Tipo de mensaje inválido",
+    "invalidMessageTypeDetails": "El campo 'message' debe ser una cadena de texto",
+    "emptyMessage": "Mensaje vacío",
+    "emptyMessageDetails": "El campo 'message' no puede estar vacío",
+    "missingAnonymizedMessage": "Campo 'anonymizedMessage' faltante",
+    "missingAnonymizedMessageDetails": "El cuerpo de la solicitud debe contener un campo 'anonymizedMessage'",
+    "invalidAnonymizedMessageType": "Tipo de anonymizedMessage inválido",
+    "invalidAnonymizedMessageTypeDetails": "El campo 'anonymizedMessage' debe ser una cadena de texto",
+    "emptyAnonymizedMessage": "AnonymizedMessage vacío",
+    "emptyAnonymizedMessageDetails": "El campo 'anonymizedMessage' no puede estar vacío",
+    "notFound": "Ruta no encontrada",
+    "notFoundDetails": "La ruta {method} {path} no existe",
+    "internalServerError": "Error interno del servidor",
+    "internalServerErrorDetails": "Ocurrió un error inesperado al procesar la solicitud",
+    "healthCheckFailed": "Error en verificación de salud",
+    "anonymizationFailed": "Error en anonimización",
+    "validationError": "Error de validación",
+    "invalidValueTokenization": "Valor inválido para tokenización"
+  },
+  "warnings": {
+    "tokensNotFound": "Tokens no encontrados en desanonimización: {tokens}"
+  }
+}
+

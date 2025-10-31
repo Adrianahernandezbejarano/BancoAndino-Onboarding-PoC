@@ -1,0 +1,35 @@
+{
+  "status": {
+    "ok": "ok"
+  },
+  "errors": {
+    "invalidJson": "Invalid JSON format",
+    "invalidJsonDetails": "Request body must be a valid JSON object",
+    "invalidRequestBody": "Invalid request body",
+    "invalidRequestBodyDetails": "Request body must be a valid JSON object",
+    "missingMessage": "Missing 'message' field",
+    "missingMessageDetails": "The request body must contain a 'message' field",
+    "invalidMessageType": "Invalid message type",
+    "invalidMessageTypeDetails": "The 'message' field must be a string",
+    "emptyMessage": "Empty message",
+    "emptyMessageDetails": "The 'message' field cannot be empty",
+    "missingAnonymizedMessage": "Missing 'anonymizedMessage' field",
+    "missingAnonymizedMessageDetails": "The request body must contain an 'anonymizedMessage' field",
+    "invalidAnonymizedMessageType": "Invalid anonymizedMessage type",
+    "invalidAnonymizedMessageTypeDetails": "The 'anonymizedMessage' field must be a string",
+    "emptyAnonymizedMessage": "Empty anonymizedMessage",
+    "emptyAnonymizedMessageDetails": "The 'anonymizedMessage' field cannot be empty",
+    "notFound": "Not found",
+    "notFoundDetails": "The route {method} {path} does not exist",
+    "internalServerError": "Internal server error",
+    "internalServerErrorDetails": "An unexpected error occurred while processing the request",
+    "healthCheckFailed": "Health check failed",
+    "anonymizationFailed": "Anonymization failed",
+    "validationError": "Validation error",
+    "invalidValueTokenization": "Invalid value for tokenization"
+  },
+  "warnings": {
+    "tokensNotFound": "Tokens not found in deanonymization: {tokens}"
+  }
+}
+
