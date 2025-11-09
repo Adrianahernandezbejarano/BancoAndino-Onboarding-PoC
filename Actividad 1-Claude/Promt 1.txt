@@ -1,0 +1,49 @@
+Diseña una solución inteligente para el Banco Andino que automatice la detección de inconsistencias entre formularios digitales y documentos cargados por clientes durante el proceso de onboarding de personas naturales. La solución debe abordar los siguientes aspectos:
+
+Objetivo:
+- Mejorar la calidad de la información, la eficiencia operativa y la seguridad del onboarding digital.
+- Reducir errores manuales, tiempos de validación y riesgos de cumplimiento (KYC, AML, SARLAFT).
+
+Componentes clave a nivel arquitectónico:
+- Capa de Cliente: App de onboarding digital, autenticación segura (Cognito).
+- Capa de Entrada: API Gateway para recepción de formularios y documentos.
+- Capa de Almacenamiento: Amazon S3 para documentos, DynamoDB para formularios y resultados.
+- Capa de Procesamiento Inteligente:
+- OCR con Amazon Rekognitio- n o Textract.
+- IDP/NLP con Amazon Comprehend o SageMaker.
+- Comparador de datos (Lambda).
+- Motor de reglas e IA (Lambda + SageMaker).
+- Capa de Reportes y Alertas:
+- Generador de reportes automáticos (Lambda).
+- Notificación mediante SQS/SNS.
+- Capa de Revisión Humana: Dashboard para analistas, flujo de revisión manual.
+- Capa de Seguridad y Auditoría: IAM, KMS, CloudWatch, AWS Config.
+
+Diagrama de Secuencia (PlantUML):
+Genera un diagrama que muestre el flujo entre:
+- Cliente
+- App Banco Andino
+- Módulo OCR/IDP
+- Motor de Comparación
+- Motor de Reglas/IA
+- Generador de Reportes
+- Backoffice/Analista
+
+Diagrama de Interacción de Entidades:
+Muestra cómo interactúan los siguientes elementos:
+- Formulario digital
+- Documento cargado
+- OCR/IDP
+- Comparador
+- Motor de reglas
+- Reporte
+- Analista
+
+Arquitectura Tentativa en AWS (usando librería Diagrams en Python):
+Genera un diagrama que incluya:
+- Cognito, API Gateway, Lambda, S3, DynamoDB
+- Rekognition, Comprehend, SageMaker
+- SQS/SNS, CloudWatch, IAM, KMS
+- Agrupación por capas funcionales
+El diseño debe ser modular, escalable y trazable, alineado con buenas prácticas de seguridad y cumplimiento normativo. incorpore la respuesta en un archivo markdown en un proyecto nuevo en Cursor
+

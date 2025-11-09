@@ -1,0 +1,145 @@
+@startuml
+
+!define RECTANGLE class
+
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+
+left to right direction
+
+actor "Cliente\nVisitante" as ClienteVisitante
+actor "Cliente\nLogueado" as ClienteLogueado
+actor "Sistema\nSIVD" as Sistema
+actor "Analista\nBanco" as Analista
+
+rectangle "Sistema Inteligente de Validación Documental (SIVD)" {
+  
+  package "Módulo de Registro" {
+    usecase UC01 as "CU-01: Registrar Cliente
+    --
+    El cliente visitante crea
+    una cuenta en el sistema"
+    
+    usecase UC02 as "CU-02: Iniciar Sesión
+    --
+    El cliente accede al
+    sistema con credenciales"
+  }
+  
+  package "Módulo de Onboarding" {
+    usecase UC03 as "CU-03: Completar Formulario
+    --
+    El cliente ingresa datos
+    personales, laborales
+    y financieros"
+    
+    usecase UC04 as "CU-04: Cargar Documentos
+    --
+    El cliente sube documentos
+    de identidad, domicilio
+    e ingresos"
+    
+    usecase UC10 as "CU-10: Consultar Estado
+    --
+    El cliente verifica progreso
+    de su solicitud"
+  }
+  
+  package "Módulo de Validación Automática" {
+    usecase UC05 as "CU-05: Extraer Datos (OCR)
+    --
+    El sistema procesa documentos
+    y extrae información mediante
+    OCR/IDP"
+    
+    usecase UC06 as "CU-06: Validar Inconsistencias
+    --
+    El sistema compara datos del
+    formulario vs documentos"
+    
+    usecase UC07 as "CU-07: Aplicar Reglas
+    --
+    El sistema evalúa inconsistencias
+    según reglas de negocio
+    y umbrales"
+    
+    usecase UC08 as "CU-08: Generar Reporte
+    --
+    El sistema crea reporte
+    con resultados y nivel
+    de confianza"
+  }
+  
+  package "Módulo de Revisión Manual" {
+    usecase UC09 as "CU-09: Revisar Caso Manual
+    --
+    El analista revisa solicitudes
+    con inconsistencias"
+    
+    usecase UC11 as "CU-11: Aprobar/Rechazar
+    --
+    El analista toma decisión
+    final sobre la solicitud"
+    
+    usecase UC12 as "CU-12: Consultar Dashboard
+    --
+    El analista consulta casos
+    pendientes de revisión"
+  }
+  
+  package "Módulo de Auditoría" {
+    usecase UC13 as "CU-13: Registrar Trazabilidad
+    --
+    El sistema guarda historial
+    de validaciones y decisiones"
+    
+    usecase UC14 as "CU-14: Generar Informe Auditoría
+    --
+    El analista genera reportes
+    para cumplimiento normativo"
+  }
+}
+
+' Relaciones Cliente Visitante
+ClienteVisitante --> UC01
+
+' Relaciones Cliente Logueado
+ClienteLogueado --> UC02
+ClienteLogueado --> UC03
+ClienteLogueado --> UC04
+ClienteLogueado --> UC10
+
+' Relaciones Sistema
+UC04 ..> UC05 : <<include>>
+UC05 ..> UC06 : <<include>>
+UC06 ..> UC07 : <<include>>
+UC07 ..> UC08 : <<include>>
+UC08 ..> UC13 : <<include>>
+
+' Relaciones Analista
+Analista --> UC09
+Analista --> UC11
+Analista --> UC12
+Analista --> UC14
+
+' Extensiones y dependencias
+UC06 ..> UC09 : <<extend>>\n[inconsistencias detectadas]
+UC11 ..> UC13 : <<include>>
+
+' Herencia
+ClienteLogueado --|> ClienteVisitante
+
+note right of UC06
+  Si se detectan inconsistencias
+  que superan el umbral configurado,
+  el caso pasa a revisión manual
+end note
+
+note right of UC13
+  Todos los eventos del sistema
+  quedan registrados para
+  auditoría y cumplimiento
+end note
+
+@enduml
+

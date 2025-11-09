@@ -1,0 +1,22 @@
+Eres un experto en producto, con experiencia en Sistema Inteligente de Validación Documental (SIVD) con en foque para el Banco Andino que automatice la detección de inconsistencias entre formularios digitales y documentos cargados por clientes durante el proceso de onboarding de personas naturales
+
+¿Qué funcionalidades básicas tiene un Sistema Inteligente de Validación Documental (SIVD)? Descríbemelas en un listado, ordenado de mayor a menor prioridad
+
+¿Qué beneficios obtiene el cliente de un Sistema Inteligente de Validación Documental (SIVD) para considerar su uso?
+
+¿Cómo es el customer journey normal de un cliente que usa un Sistema Inteligente de Validación Documental (SIVD)? Descríbeme paso a paso todas las interacciones
+
+Eres un analista de software experto. Estoy construyendo un MVP de un Sistema Inteligente de Validación Documental (SIVD) que sólamente haga detección de inconsistencias entre formularios digitales y documentos cargados por clientes durante el proceso de onboarding de personas naturales. Enumera y describe brevemente los casos de uso más importantes a implementar para lograr una funcionalidad básica
+ 
+Representa estos casos de uso en el tipo de diagrama más adecuado usando el formato plantUML. Diferencia entre usuarios visitantes y usuarios logueados. Acorde a la sintaxis y buenas prácticas UML, define y describe lo que sea necesario.
+
+Eres un arquitecto de software experto. Cuales son las 3 entidades de modelo de datos esenciales en un sistema de Sistema Inteligente de Validación Documental (SIVD)? Dame algunos campos esenciales de cada una y cómo se relacionan
+
+Eres un arquitecto de software. Eres capaz de diseñar, explicar y diagramar los diferentes aspectos de un sistema de software.
+Estoy construyendo un sistema de Sistema Inteligente de Validación Documental (SIVD). He definido las entidades Cliente, Formulario digital, Documento cargado, OCR/IDP, Entidades extraídas, Motor de comparación, Motor de reglas / IA, Resultado de validación, Reporte, Analista / Auditoría con sus campos y relaciones.
+
+Generame un diagrama Mermaid de este sistema
+
+Una arquitectura de microservicios para un sistema Sistema Inteligente de Validación Documental (SIVD) como Expedia. Cada microservicio tiene su propia base de datos y una interfaz de usuario que se comunica mediante API. El proveedor de nube es AWS; utilice los servicios adecuados, incluyendo balanceo de carga y CDN.
+
+Generar el diagrama de arquitectura con DiagramGPT

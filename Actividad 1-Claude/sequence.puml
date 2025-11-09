@@ -1,0 +1,28 @@
+﻿@startuml
+actor Cliente
+participant "App Banco Andino" as App
+participant "API Gateway / Ingesta" as API
+participant "Módulo OCR/IDP (Textract/Comprehend)" as OCR
+participant "Motor de Comparación" as COMP
+participant "Motor de Reglas / IA (SageMaker)" as IA
+participant "Generador de Reportes" as REP
+participant "Backoffice / Analista" as ANAL
+
+Cliente -> App: Completa formulario + carga documentos
+App -> API: POST /onboarding (form + presigned S3 URLs)
+API -> S3: almacena documentos
+API -> Lambda_Orquestador: trigger (evento)
+Lambda_Orquestador -> OCR: extraer texto y entidades (Textract/Comprehend)
+OCR --> Lambda_Orquestador: entidades extraidas (nombre, DOB, docID, dirección, foto_facehash)
+Lambda_Orquestador -> COMP: enviar formulario + entidades
+COMP --> Lambda_Orquestador: score de coincidencia y lista de inconsistencias
+Lambda_Orquestador -> IA: evaluar reglas + modelo (riesgo)
+IA --> Lambda_Orquestador: decision (AUTO_APPROVE / REVIEW / REJECT) + razonamiento
+Lambda_Orquestador -> DynamoDB: persistir resultado, metadata, versión de documento
+Lambda_Orquestador -> REP: generar reporte y evidencia
+REP -> SNS: notificar a Backoffice si REVIEW o ALERT
+SNS -> ANAL: crea tarea en dashboard
+ANAL -> App: analista revisa y toma acción
+ANAL -> Lambda_Orquestador: resultado final (overrule / confirm)
+Lambda_Orquestador -> DynamoDB: actualizar estado definitivo, auditar
+@enduml

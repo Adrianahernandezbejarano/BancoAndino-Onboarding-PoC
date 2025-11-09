@@ -1,0 +1,171 @@
+@startuml Diagrama ER - Sistema de Onboarding Banco Andino
+
+!define PK_COLOR #FFE6E6
+!define FK_COLOR #E6F3FF
+
+skinparam class {
+    BackgroundColor #FEFEFE
+    BorderColor #000000
+    ArrowColor #000000
+}
+
+entity "CLIENTE" as Cliente {
+    * id_cliente : INT <<PK>>
+    --
+    * numero_identificacion : STRING <<UK>>
+    * nombre_completo : STRING
+    * email : STRING <<UK>>
+    telefono : STRING
+    fecha_registro : DATETIME
+    estado_cuenta : STRING
+}
+
+entity "FORMULARIO_DIGITAL" as FormularioDigital {
+    * id_formulario : INT <<PK>>
+    --
+    * id_cliente : INT <<FK>>
+    nombre : STRING
+    apellidos : STRING
+    numero_identificacion : STRING
+    fecha_nacimiento : DATE
+    direccion : STRING
+    ocupacion : STRING
+    ingresos_mensuales : DECIMAL
+    tipo_empleo : STRING
+    fecha_completado : DATETIME
+    datos_completos : JSON
+}
+
+entity "SOLICITUD_ONBOARDING" as SolicitudOnboarding {
+    * id_solicitud : INT <<PK>>
+    --
+    * id_formulario : INT <<FK>>
+    * id_cliente : INT <<FK>>
+    estado : STRING
+    fecha_inicio : DATETIME
+    fecha_actualizacion : DATETIME
+    score_global : INT
+    prioridad : STRING
+}
+
+entity "DOCUMENTO_CARGADO" as DocumentoCargado {
+    * id_documento : INT <<PK>>
+    --
+    * id_solicitud : INT <<FK>>
+    * id_cliente : INT <<FK>>
+    tipo_documento : STRING
+    nombre_archivo : STRING
+    url_almacenamiento : STRING
+    fecha_carga : DATETIME
+    formato : STRING
+    tamano_bytes : INT
+    estado_procesamiento : STRING
+}
+
+entity "PROCESAMIENTO_OCR" as ProcesamientoOCR {
+    * id_procesamiento : INT <<PK>>
+    --
+    * id_documento : INT <<FK>>
+    motor_usado : STRING
+    fecha_procesamiento : DATETIME
+    tiempo_procesamiento_seg : DECIMAL
+    nivel_confianza : DECIMAL
+    estado : STRING
+    metadata : JSON
+}
+
+entity "ENTIDAD_EXTRAIDA" as EntidadExtraida {
+    * id_entidad : INT <<PK>>
+    --
+    * id_procesamiento : INT <<FK>>
+    tipo_entidad : STRING
+    campo : STRING
+    valor_extraido : STRING
+    confianza : DECIMAL
+    coordenadas_documento : JSON
+    metodo_extraccion : STRING
+}
+
+entity "MOTOR_COMPARACION" as MotorComparacion {
+    * id_comparacion : INT <<PK>>
+    --
+    * id_formulario : INT <<FK>>
+    fecha_comparacion : DATETIME
+    total_campos_comparados : INT
+    campos_coincidentes : INT
+    campos_discrepantes : INT
+    score_similitud : DECIMAL
+    detalle_comparaciones : JSON
+}
+
+entity "MOTOR_REGLAS_IA" as MotorReglasIA {
+    * id_ejecucion_reglas : INT <<PK>>
+    --
+    * id_comparacion : INT <<FK>>
+    fecha_ejecucion : DATETIME
+    modelo_ia_usado : STRING
+    reglas_evaluadas : INT
+    reglas_cumplidas : INT
+    reglas_violadas : INT
+    detalle_reglas : JSON
+    decision_automatica : STRING
+}
+
+entity "RESULTADO_VALIDACION" as ResultadoValidacion {
+    * id_resultado : INT <<PK>>
+    --
+    * id_solicitud : INT <<FK>>
+    * id_ejecucion_reglas : INT <<FK>>
+    resultado_final : STRING
+    score_confianza : DECIMAL
+    total_inconsistencias : INT
+    inconsistencias_criticas : INT
+    inconsistencias_moderadas : INT
+    inconsistencias_leves : INT
+    requiere_revision_manual : STRING
+    fecha_resultado : DATETIME
+    detalles_inconsistencias : JSON
+}
+
+entity "REPORTE" as Reporte {
+    * id_reporte : INT <<PK>>
+    --
+    * id_resultado : INT <<FK>>
+    tipo_reporte : STRING
+    fecha_generacion : DATETIME
+    formato : STRING
+    url_reporte : STRING
+    resumen_ejecutivo : JSON
+    evidencias : JSON
+}
+
+entity "ANALISTA_AUDITORIA" as AnalistaAuditoria {
+    * id_revision : INT <<PK>>
+    --
+    * id_resultado : INT <<FK>>
+    * id_analista : INT <<FK>>
+    fecha_revision : DATETIME
+    decision_analista : STRING
+    comentarios : STRING
+    cambios_realizados : JSON
+    fecha_decision_final : DATETIME
+    motivo_decision : STRING
+}
+
+' Relaciones
+Cliente ||--o{ FormularioDigital : "completa"
+Cliente ||--o{ DocumentoCargado : "sube"
+FormularioDigital ||--|| SolicitudOnboarding : "genera"
+SolicitudOnboarding ||--o{ DocumentoCargado : "incluye"
+DocumentoCargado ||--|| ProcesamientoOCR : "procesa"
+ProcesamientoOCR ||--o{ EntidadExtraida : "genera"
+FormularioDigital ||--|| MotorComparacion : "ingresa_a"
+EntidadExtraida ||--|| MotorComparacion : "ingresa_a"
+MotorComparacion ||--|| MotorReglasIA : "alimenta"
+MotorReglasIA ||--|| ResultadoValidacion : "produce"
+ResultadoValidacion ||--|| Reporte : "genera"
+ResultadoValidacion ||--o{ AnalistaAuditoria : "revisa"
+SolicitudOnboarding ||--o{ ResultadoValidacion : "tiene"
+
+@enduml
+

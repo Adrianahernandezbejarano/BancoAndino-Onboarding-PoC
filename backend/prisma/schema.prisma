@@ -1,0 +1,64 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum EstadoOnboarding {
+  REGISTRO_COMPLETADO
+  FORMULARIO_COMPLETADO
+  DOCUMENTOS_CARGADOS
+  VALIDACION_EN_PROCESO
+  VALIDACION_COMPLETADA
+  APROBADO
+  EN_REVISION
+  RECHAZADO
+  CORRECCION_REQUERIDA
+}
+
+model Cliente {
+  id                  String    @id @default(uuid())
+  email               String    @unique
+  telefono            String?
+  passwordHash        String    @map("password_hash")
+  estadoOnboarding    EstadoOnboarding @default(REGISTRO_COMPLETADO) @map("estado_onboarding")
+  emailVerificado     Boolean   @default(false) @map("email_verificado")
+  tokenVerificacion   String?   @map("token_verificacion")
+  tokenExpiracion     DateTime? @map("token_expiracion")
+  fechaRegistro       DateTime  @default(now()) @map("fecha_registro")
+  ipRegistro          String?   @map("ip_registro")
+  dispositivoRegistro String?   @map("dispositivo_registro")
+  origenRegistro      String?   @map("origen_registro")
+  ultimoAcceso        DateTime? @map("ultimo_acceso")
+  intentosFallidos    Int       @default(0) @map("intentos_fallidos")
+  bloqueadoHasta      DateTime? @map("bloqueado_hasta")
+  createdAt           DateTime  @default(now()) @map("created_at")
+  updatedAt           DateTime  @updatedAt @map("updated_at")
+
+  @@index([email])
+  @@index([estadoOnboarding])
+  @@index([fechaRegistro])
+  @@map("clientes")
+}
+
+model AuditoriaAuth {
+  id          String   @id @default(uuid())
+  clienteId   String?  @map("cliente_id")
+  action      String
+  ipAddress   String?  @map("ip_address")
+  userAgent   String?  @map("user_agent")
+  metadata    Json?
+  timestamp   DateTime @default(now())
+  success     Boolean  @default(true)
+
+  @@index([clienteId])
+  @@index([timestamp])
+  @@map("auditoria_auth")
+}
+
